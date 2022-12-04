@@ -12,7 +12,7 @@ router.get('/:id', async (req, res, next) => {
 
     try {
         //const getById = await data.(i => i.id == idVideogame)
-        data ? res.send(data) : res.status(404).send('El id ingresado no coincide con un videojuego en particular')
+        data ? res.json(data) : res.status(404).json('El id ingresado no coincide con un videojuego en particular')
 
     } catch(e) {
         next(e)
@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
 
 
         await newVideogame.addGenres(relacion) //a mi juego creado, le agrego algun genero
-        res.send(newVideogame)
+        res.json(newVideogame)
 
     } catch(e) {
         next(e)

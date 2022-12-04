@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
             headers: { "Accept-Encoding": "null" }
         })
         const genresApi = await respuesta.data.results?.map(g => g.name)
-        res.send(genresApi);
+        res.json(genresApi);
     } catch (e) {
         next(e);
     }
@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
         const newGenre = await Genres.Create({ //lo uso para guardar los generos que me traje de la API en la base de datos
             name
         });
-        res.status(201).send(newGenre);
+        res.status(201).json(newGenre);
 
     } catch (e) {
         next(e);

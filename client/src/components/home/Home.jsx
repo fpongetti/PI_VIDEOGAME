@@ -40,12 +40,12 @@ export default function Home() {
                 {
                     allVideogames?.map((v) => {
                         console.log(allVideogames)
-                        return(
+                        return (
                             <Fragment >
-                            <Link to  = {"/home/" + v.id}>
-                        <Card name= {v.name} genre= {v.genre} image= {v.img} key = {v.id}></Card>
-                        </Link>
-                        </Fragment>
+                                <Link to={"/home/" + v.id}>
+                                    <Card name={v.name} genre={v.genre} image={v.img} key={v.id}></Card>
+                                </Link>
+                            </Fragment>
                         );
                     })
                 }

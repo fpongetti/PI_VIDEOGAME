@@ -1,7 +1,8 @@
 require('dotenv').config();
 const { API_KEY } = process.env;
 const axios = require('axios');
-const { Genres, Videogame } = require("../db")
+const { Genres, Videogame } = require("../db");
+
 
 //-------------------------------------------->  PEDIDO A LA API DE TODOS LOS VIDEOGAMES (100)
 

@@ -16,14 +16,14 @@ router.get('/', async (req, res, next) => {
 			// const gamesByNameDB = await getDbInfo()
 			// let foundGamesDB = gamesByNameDB.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
 			// let allResults = foundGamesDB.concat(foundGamesAPI)
-			allResults.length ? res.status(200).send(allResults.slice(0, 15)) : res.status(400).send('No hay un videojuego con dicho nombre')
+			allResults.length ? res.status(200).json(allResults.slice(0, 15)) : res.status(400).json('No hay un videojuego con dicho nombre')
 
 		} catch (err) {
 			next(err)
 		}
 	}
-	else {
-		res.send(allVideogames)
+	else { 
+		res.json(allVideogames)
 		return
 	}
 })
@@ -40,7 +40,7 @@ router.get('/platforms', async (req, res, next) => {
             }
         }))
     
-        allPlatforms.length ? res.status(200).json(allPlatforms) : res.status(404).send('Error')
+        allPlatforms.length ? res.status(200).json(allPlatforms) : res.status(404).json('Error')
 
         }catch(e) {
             next(e)
