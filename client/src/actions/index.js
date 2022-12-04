@@ -1,0 +1,139 @@
+ import axios from "axios";
+// export const GET_VIDEOGAMES= 'GET_VIDEOGAMES';
+// export function getVideogames() {
+//     return async function (dispatch) {
+//         var json = await axios("http://localhost:3001/videogames", {
+
+//         });
+//         return dispatch({
+//             type: "GET_VIDEOGAMES",
+//             payload: json.data
+
+//         })
+//     }
+// }
+export const SORT = 'SORT';
+export const SORT_RATING = 'SORT_RATING';
+export const GET_VIDEOGAME= 'GET_VIDEOGAME';
+export const GET_VIDEOGAMES= 'GET_VIDEOGAMES';
+export const GET_VIDEOGAME_NAME= 'GET_VIDEOGAME_NAME';
+export const FILTER_GENRE = 'FILTER_GENRE';
+export const FILTER_DB = 'FILTER_DB';
+export const FILTER_PLATFORMS = 'FILTER_PLATFORMS';
+export const GET_GENRE = 'GET_GENRE';
+export const FILTER_RATING = 'FILTER_RATING';
+
+
+
+
+export const filterRat = () =>{
+    //alphabetical
+    return {
+        type: FILTER_RATING,
+        payload: '',
+    }
+}
+
+export const getVideogames= ()=>{
+    return  function(dispatch){
+        return axios.get(`http://localhost:3001/videogames`)
+        .then(json=>{
+            dispatch({type:GET_VIDEOGAME, payload: json.data});
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    
+}
+export const getComplete = ()=>{
+    return {
+        type:GET_VIDEOGAME,
+        payload: ''
+    }
+}
+
+
+export const searchVideogame= (name)=>{
+    return  function(dispatch){
+
+        return axios.get(`http://localhost:3001/videogames?name=${name}`)
+        .then(json=>{
+            dispatch({type:GET_VIDEOGAME_NAME, payload: json.data});
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    } 
+}
+
+// export const getVideogameID= (id)=>{
+//     return function(dispatch){
+//         return fetch(`http://localhost:3001/videogames/${id}`)
+//         .then(r => r.json())
+//         .then(json=>{
+//             dispatch({type:GET_VIDEOGAMES, payload: json});
+//         })
+//         .catch(err=>{
+//             console.log(err);
+//         })
+//     } 
+// }
+
+export const sort = (order) => {
+    //alphabetical
+    return {
+        type: SORT,
+        payload: order,
+    }
+
+}
+
+
+export const sortRating = (order) => {
+    //alphabetical
+    return {
+        type: SORT_RATING,
+        payload: order,
+    }
+
+}
+
+export const filterDb = (db) => {
+    console.log(db)
+    
+    return {
+        type: FILTER_DB,
+        payload: db,
+    }
+
+}
+
+export const filterPlatforms = (platforms) => {
+    
+    return {
+        type: FILTER_PLATFORMS,
+        payload: platforms,
+    }
+
+}
+export const filterGenre = (genre) => {
+    
+    return {
+        type: FILTER_GENRE,
+        payload: genre,
+    }
+
+}
+
+export const getGenre= ()=>{
+    return function(dispatch){
+        return axios.get(`/genres`)
+        .then(json=>{
+            dispatch({type:GET_GENRE, payload: json.data});
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    } 
+}
