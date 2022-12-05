@@ -1,8 +1,7 @@
 require('dotenv').config();
 const { API_KEY } = process.env;
 const axios = require('axios');
-const { Genres, Videogame } = require("../db");
-
+const { Genres, Videogame } = require("../db")
 
 //-------------------------------------------->  PEDIDO A LA API DE TODOS LOS VIDEOGAMES (100)
 
@@ -10,10 +9,10 @@ const GetApiInfo = async () => {
     console.log(API_KEY)
     let videojuegos = []
     try {
-        for (let i = 0; i < 5; i++) { //con un for recorro mi API, ya que es un arreglo, 5 veces
+        for (let i = 1; i <= 5; i++) { //con un for recorro mi API, ya que es un arreglo, 5 veces
             const respuesta = await axios({
                 method: 'get',
-                url: `https://api.rawg.io/api/games?key=${API_KEY}`,
+                url: `https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`, 
                 headers: { "Accept-Encoding": "null" }
             }) //realizo la peticion
             //en mi .data podemos encontrar dos propiedades, results que es es aquello que voy a mapear
@@ -28,7 +27,7 @@ const GetApiInfo = async () => {
                 })
             });
             //y next que es donde voy a entrar para pasar a la siguente pagina.
-            url = respuesta.data.next
+            //url = respuesta.data.next
         }
         return videojuegos
 
