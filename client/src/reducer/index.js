@@ -1,5 +1,5 @@
 
-import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_RATING, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS } from '../actions/index';
+import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS } from '../actions/index';
 
 let initalState = {
     videogames: [],
@@ -50,7 +50,7 @@ export default function rootReducer(state = initalState, action) {
 
 
         case SORT_RATING:
-            let  ordernamientoRT = action.payload === 'Ascendente' ?
+            let ordernamientoRT = action.payload === 'descendente' ?
                 state.videogameFilter.sort((a, b) => {
                     if (a.rating > b.rating) {
                         return 1
@@ -59,8 +59,7 @@ export default function rootReducer(state = initalState, action) {
                         return -1
                     }
                     return 0
-                }) :
-                state.videogameFilter.sort(function (a, b) {
+                }) : state.videogameFilter.sort(function (a, b) {
                     if (a.rating > b.rating) {
                         return -1
                     }
@@ -71,7 +70,7 @@ export default function rootReducer(state = initalState, action) {
                 })
             return {
                 ...state,
-                videogameFilter:  ordernamientoRT
+                videogameFilter: ordernamientoRT
             }
 
         case SORT:
@@ -158,28 +157,7 @@ export default function rootReducer(state = initalState, action) {
                 }
 
             }
-        case FILTER_RATING:
-            let filterRating = [...state.videogames];
 
-            filterRating = filterRating.filter((e) => {
-                if (parseInt(e.rating, 10) < 4) {
-                    return e;
-                }
-            });
-            if (filterRating.length >= 1) {
-                return {
-                    ...state,
-                    videogameFilter: filterRating,
-                    error: false
-                }
-            } else {
-                return {
-                    ...state,
-                    videogameFilter: filterRating,
-                    error: true,
-                }
-
-            }
         default:
             return state;
     }
