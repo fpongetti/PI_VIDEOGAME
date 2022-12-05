@@ -1,17 +1,5 @@
 import axios from "axios";
-// export const GET_VIDEOGAMES= 'GET_VIDEOGAMES';
-// export function getVideogames() {
-//     return async function (dispatch) {
-//         var json = await axios("http://localhost:3001/videogames", {
 
-//         });
-//         return dispatch({
-//             type: "GET_VIDEOGAMES",
-//             payload: json.data
-
-//         })
-//     }
-// }
 export const SORT = 'SORT';
 export const SORT_RATING = 'SORT_RATING';
 export const GET_VIDEOGAME = 'GET_VIDEOGAME';
@@ -22,7 +10,6 @@ export const FILTER_DB = 'FILTER_DB';
 export const FILTER_PLATFORMS = 'FILTER_PLATFORMS';
 export const GET_GENRE = 'GET_GENRE';
 export const FILTER_RATING = 'FILTER_RATING';
-
 
 
 
@@ -67,34 +54,23 @@ export const searchVideogame = (name) => {
     }
 }
 
-// export const getVideogameID= (id)=>{
-//     return function(dispatch){
-//         return fetch(`http://localhost:3001/videogames/${id}`)
-//         .then(r => r.json())
-//         .then(json=>{
-//             dispatch({type:GET_VIDEOGAMES, payload: json});
-//         })
-//         .catch(err=>{
-//             console.log(err);
-//         })
-//     } 
-// }
 
-export const sort = (order) => {
+
+export const sort = (payload) => {
     //alphabetical
     return {
         type: SORT,
-        payload: order,
+        payload
     }
 
 }
 
 
-export const sortRating = (order) => {
-    //alphabetical
+export const sortRating = (payload) => {
+    //rating
     return {
         type: SORT_RATING,
-        payload: order,
+        payload
     }
 
 }
@@ -117,18 +93,18 @@ export const filterPlatforms = (platforms) => {
     }
 
 }
-export const filterGenre = (genre) => {
+export const filterGenre = (payload) => {
 
     return {
         type: FILTER_GENRE,
-        payload: genre,
+        payload
     }
 
 }
 
 export const getGenre = () => {
     return function (dispatch) {
-        return axios.get(`/genres`)
+        return axios.get(`http://localhost:3001/genres`)
             .then(json => {
                 dispatch({ type: GET_GENRE, payload: json.data });
             })
