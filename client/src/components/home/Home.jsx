@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, getGenre, filterGenre, Sort, sortRating, getVideogamesApi } from "../../actions";
+import { getVideogames, getGenre, filterGenre, Sort, sortRating, getVideogamesApi, getVideogamesDb } from "../../actions";
 import { Link } from "react-router-dom";
 import Card from "../cards/Card";
 import Pagination from "../paginado/Paginado";
@@ -40,11 +40,15 @@ export default function Home() {
         setCurrentPage(1);
         setOrder(`ordenado ${e.target.value}`)
     }
-    function handleInfoApi(e) {
-        e.preventDefault();
+    function handleInfoApi() {
         dispatch(getVideogamesApi())
         setCurrentPage(1);
-        setOrder(`ordenado ${e.target.value}`)
+        
+    }
+    function handleInfoDb() {
+        dispatch(getVideogamesDb())
+        setCurrentPage(1);
+        
     }
     function handleClick(e) {
         e.preventDefault();
@@ -65,10 +69,14 @@ export default function Home() {
                     <option value="atoz">A-Z</option>
                     <option value="ztoa">Z-A</option>
                 </select>
-                <select defaultValue={'DEFAULT'}>
+                <select onChange={ handleInfoApi }>
+                    <option value="videogames">videojuegos</option>
+                    <option value="api">existente</option>
+                </select>
+                <select onChange={ handleInfoDb}>
                     <option value="videogames">videojuegos</option>
                     <option value="created" >creados</option>
-                    <option value="api" onClick={(e) => handleInfoApi(e)} >existente</option>
+        
                 </select>
                 <select onChange={(e) => handleGenreFilter(e)} defaultValue={'DEFAULT'}>
                     <option disabled value="DEFAULT">Select...</option>

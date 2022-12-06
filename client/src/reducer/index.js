@@ -1,10 +1,11 @@
 
-import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS, GET_VIDEOGAMES_API } from '../actions/index';
+import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS, GET_VIDEOGAMES_API, GET_VIDEOGAMES_DB } from '../actions/index';
 
 let initalState = {
     videogames: [],
     videogameFilter: [],
     genres: [],
+    videogame: {},
     error: false,
     complete: false
 }
@@ -35,6 +36,14 @@ export default function rootReducer(state = initalState, action) {
                 error: false,
                 complete: true
             }
+            case GET_VIDEOGAMES_DB:
+                return {
+                    ...state,
+                    videogames: action.payload,
+                    videogameFilter: action.payload,
+                    error: false,
+                    complete: true
+                }
         case GET_GENRE:
             return { ...state, genres: action.payload }
         case GET_VIDEOGAME_NAME:

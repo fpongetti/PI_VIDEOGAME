@@ -2,6 +2,8 @@ import './App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import LandingPage from "./components/landingpage/LandingPage"
 import Home from "./components/home/Home"
+import CreateVideogame from "./components/createVideogame/CreateVideogame"
+
 
 function App() {
   return (

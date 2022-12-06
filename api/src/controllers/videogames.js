@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { API_KEY } = process.env;
 const axios = require('axios');
-const { Genres, Videogame } = require("../db")
+const { Genre, Videogame } = require("../db")
 
 //-------------------------------------------->  PEDIDO A LA API DE TODOS LOS VIDEOGAMES (100)
 
@@ -51,7 +51,7 @@ const getDbInfo = async () => {
     try {
         const resultsDB = await Videogame.findAll({
             include: {
-                model: Genres,
+                model: Genre,
                 attributes: ['name'],
                 through: {
                     attributes: []
@@ -160,7 +160,7 @@ const idDb = async (id) => {
     try {
         return await Videogame.findByPk(id, {
             include: [{
-                model: Genres,
+                model: Genre,
                 atributes: ['name'],
                 throught: {
                     attributes: []

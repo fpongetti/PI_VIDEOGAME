@@ -10,7 +10,8 @@ export const FILTER_DB = 'FILTER_DB';
 export const FILTER_PLATFORMS = 'FILTER_PLATFORMS';
 export const GET_GENRE = 'GET_GENRE';
 export const GET_VIDEOGAMES_API = "GET_VIDEOGAMES_API";
-
+export const GET_VIDEOGAMES_DB = "GET_VIDEOGAMES_DB";
+export const CREATE_VIDEOGAMES = "CREATE_VIDEOGAMES"
 
 export const getVideogames = () => {
     return function (dispatch) {
@@ -29,6 +30,18 @@ export const getVideogamesApi = () => {
         return axios.get(`http://localhost:3001/videogames/api`)
             .then(json => {
                 dispatch({ type: GET_VIDEOGAMES_API, payload: json.data });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+}
+export const getVideogamesDb = () => {
+    return function (dispatch) {
+        return axios.get(`http://localhost:3001/videogames/db`)
+            .then(json => {
+                dispatch({ type: GET_VIDEOGAMES_DB, payload: json.data });
             })
             .catch(err => {
                 console.log(err);
@@ -104,7 +117,15 @@ export const filterGenre = (payload) => {
     }
 
 }
+export const CreateVideogame = (payload) => {
 
+    return async function (dispatch){
+        var json = await axios.post(`http://localhost:3001/videogame`, payload)
+        return json;
+    }
+    
+
+}
 export const getGenre = () => {
     return function (dispatch) {
         return axios.get(`http://localhost:3001/genres`)

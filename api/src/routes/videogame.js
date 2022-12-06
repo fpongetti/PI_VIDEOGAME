@@ -2,7 +2,7 @@ const { Router } = require('express');
 require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
 const { videogame } = require('../controllers/videogames')
-const {Videogame, Genres} = require('../db.js')
+const {Videogame, Genre} = require('../db.js')
 
 const router = Router();
 
@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
             createdInDb: true,
             id: uuidv4()
         })
-        const relacion = await Genres?.findAll({ //en generos, buscame todos aquellos
+        const relacion = await Genre?.findAll({ //en generos, buscame todos aquellos
             where: { //donde
                 name: genres
             }
