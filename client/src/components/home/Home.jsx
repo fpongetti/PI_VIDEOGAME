@@ -1,10 +1,11 @@
 import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, getGenre, filterGenre, Sort, sortRating } from "../../actions";
+import { getVideogames, getGenre, filterGenre, Sort, sortRating, getVideogamesApi } from "../../actions";
 import { Link } from "react-router-dom";
 import Card from "../cards/Card";
 import Pagination from "../paginado/Paginado";
+import SearchBar from "../searchbar/SearchBar";
 export default function Home() {
     const dispatch = useDispatch()
     const allGenres = useSelector((state) => state.genres)
@@ -39,6 +40,12 @@ export default function Home() {
         setCurrentPage(1);
         setOrder(`ordenado ${e.target.value}`)
     }
+    function handleInfoApi(e) {
+        e.preventDefault();
+        dispatch(getVideogamesApi())
+        setCurrentPage(1);
+        setOrder(`ordenado ${e.target.value}`)
+    }
     function handleClick(e) {
         e.preventDefault();
         dispatch(getVideogames());
@@ -58,16 +65,18 @@ export default function Home() {
                     <option value="atoz">A-Z</option>
                     <option value="ztoa">Z-A</option>
                 </select>
-                <select>
+                <select defaultValue={'DEFAULT'}>
                     <option value="videogames">videojuegos</option>
-                    <option value="created">creados</option>
-                    <option value="api">existente</option>
+                    <option value="created" >creados</option>
+                    <option value="api" onClick={(e) => handleInfoApi(e)} >existente</option>
                 </select>
                 <select onChange={(e) => handleGenreFilter(e)} defaultValue={'DEFAULT'}>
                     <option disabled value="DEFAULT">Select...</option>
                     <option value='all' >All genres</option>
                     {allGenres?.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
                 </select>
+                <SearchBar></SearchBar>
+
                 {
                     currentVideogames?.map((v) => {
 

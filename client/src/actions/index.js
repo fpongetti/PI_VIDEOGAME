@@ -9,7 +9,7 @@ export const FILTER_GENRE = 'FILTER_GENRE';
 export const FILTER_DB = 'FILTER_DB';
 export const FILTER_PLATFORMS = 'FILTER_PLATFORMS';
 export const GET_GENRE = 'GET_GENRE';
-
+export const GET_VIDEOGAMES_API = "GET_VIDEOGAMES_API";
 
 
 export const getVideogames = () => {
@@ -17,6 +17,18 @@ export const getVideogames = () => {
         return axios.get(`http://localhost:3001/videogames`)
             .then(json => {
                 dispatch({ type: GET_VIDEOGAME, payload: json.data });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+}
+export const getVideogamesApi = () => {
+    return function (dispatch) {
+        return axios.get(`http://localhost:3001/videogames/api`)
+            .then(json => {
+                dispatch({ type: GET_VIDEOGAMES_API, payload: json.data });
             })
             .catch(err => {
                 console.log(err);

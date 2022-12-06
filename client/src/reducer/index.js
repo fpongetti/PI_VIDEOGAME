@@ -1,5 +1,5 @@
 
-import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS } from '../actions/index';
+import { GET_VIDEOGAME, SORT_RATING, SORT, GET_VIDEOGAME_NAME, FILTER_DB, GET_GENRE, FILTER_GENRE, FILTER_PLATFORMS, GET_VIDEOGAMES_API } from '../actions/index';
 
 let initalState = {
     videogames: [],
@@ -27,13 +27,21 @@ export default function rootReducer(state = initalState, action) {
                 complete: true
             }
         // }
+        case GET_VIDEOGAMES_API:
+            return {
+                ...state,
+                videogames: action.payload,
+                videogameFilter: action.payload,
+                error: false,
+                complete: true
+            }
         case GET_GENRE:
             return { ...state, genres: action.payload }
         case GET_VIDEOGAME_NAME:
             if (action.payload.length >= 1) {
                 return {
                     ...state,
-                    videogame: action.payload,
+                    videogames: action.payload,
                     videogameFilter: action.payload,
                     error: false,
                     complete: false,

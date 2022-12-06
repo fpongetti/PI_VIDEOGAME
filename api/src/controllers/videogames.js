@@ -12,7 +12,7 @@ const GetApiInfo = async () => {
         for (let i = 1; i <= 5; i++) { //con un for recorro mi API, ya que es un arreglo, 5 veces
             const respuesta = await axios({
                 method: 'get',
-                url: `https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`, 
+                url: `https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`,
                 headers: { "Accept-Encoding": "null" }
             }) //realizo la peticion
             //en mi .data podemos encontrar dos propiedades, results que es es aquello que voy a mapear
@@ -39,16 +39,30 @@ const GetApiInfo = async () => {
 
 //-------------------------------------------->  PEDIDO A LA DATABASE  
 const getDbInfo = async () => {
-    return await Videogame.findAll({
-        include: {
-            model: Genres,
-            attributes: ["name"],
-            through: {
-                attributes: [],
+    // return await Videogame.findAll({
+    //     include: {
+    //         model: Genres,
+    //         attributes: ["name"],
+    //         through: {
+    //             attributes: [],
+    //         }
+    //     }
+    // })
+    try {
+        const resultsDB = await Videogame.findAll({
+            include: {
+                model: Genres,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
             }
-        }
-    })
-
+        })
+      
+        return resultsDB;
+    } catch (error) {
+        return ('error')
+    }
 }
 
 
@@ -91,12 +105,12 @@ const nameApi = async (name) => {
 //--------------------------------------------> SOLICITUD POR QUERY DE NOMBRE DATABASE
 
 const nameDb = async (name) => {
-    try{
+    try {
         const infodb = await getDbInfo();
         const infobyname = infodb.filter(videogame => videogame.name.includes(name))
         return infobyname;
     } catch (e) {
-    console.error(e)
+        console.error(e)
     }
 }
 
@@ -104,12 +118,12 @@ const nameDb = async (name) => {
 //--------------------------------------------> uno mis solicitudes por QUERY
 
 const GetAllInfoByName = async (name) => {
-  
+
     const apInfo = await nameApi(name);
     const DbInfo = await nameDb(name);
     const infoTotal = apInfo.concat(DbInfo);
     return infoTotal
-    
+
 }
 
 
@@ -121,20 +135,20 @@ const idApi = async (id) => {
             method: 'get',
             headers: { "Accept-Encoding": "null" }
         })
-            const { data } = await rtaApi;
-            console.log(data + "esta es mi data")
-            const info = {
-                id: data.id,
-                name: data.name,
-                image: data.background_image,
-                genres: data.genres?.map(g => g.name),
-                description: data.description,
-                released: data.released,
-                rating: data.rating,
-                platforms: data.platforms?.map(el => el.platform.name)
-            }
-            return info
-    
+        const { data } = await rtaApi;
+        console.log(data + "esta es mi data")
+        const info = {
+            id: data.id,
+            name: data.name,
+            image: data.background_image,
+            genres: data.genres?.map(g => g.name),
+            description: data.description,
+            released: data.released,
+            rating: data.rating,
+            platforms: data.platforms?.map(el => el.platform.name)
+        }
+        return info
+
 
     } catch (e) {
         console.error(e)
@@ -161,14 +175,14 @@ const idDb = async (id) => {
 //--------------------------------------------> UNO LAS SOLICITUDES
 
 const videogame = async (id) => {
-  
+
     const infoIdDB = await idDb(id);
-    if (infoIdDB){
+    if (infoIdDB) {
         return infoIdDB
     }
-    const infoIdApi= await idApi(id);
+    const infoIdApi = await idApi(id);
     return infoIdApi
-  
+
 }
 
 module.exports = {
@@ -177,6 +191,6 @@ module.exports = {
     GetApiInfo,
     nameApi,
     videogame,
-    GetAllInfoByName 
+    GetAllInfoByName
 
 }
